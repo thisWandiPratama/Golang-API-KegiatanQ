@@ -14,6 +14,7 @@ type KegiatanRepository interface {
 	DeleteKegiatanq(h entity.KegiatanQ)
 	AllKegiatanq(userID string) []entity.KegiatanQ
 	FindKegiatanqByID(hutangID uint64) entity.KegiatanQ
+	AllUser() []entity.User
 }
 
 type kegiatanqConnection struct {
@@ -54,5 +55,12 @@ func (db *kegiatanqConnection) AllKegiatanq(userID string) []entity.KegiatanQ {
 	var hutangs []entity.KegiatanQ
 	db.connection.Preload("User").Where("user_id", userID).Find(&hutangs)
 	return hutangs
+
+}
+
+func (db *kegiatanqConnection) AllUser() []entity.User {
+	var users []entity.User
+	db.connection.Find(&users)
+	return users
 
 }

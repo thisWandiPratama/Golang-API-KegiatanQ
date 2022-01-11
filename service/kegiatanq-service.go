@@ -18,6 +18,7 @@ type KegiatanQService interface {
 	All(userID string) []entity.KegiatanQ
 	FindByID(kegiatanqID uint64) entity.KegiatanQ
 	IsAllowedToEdit(userID string, kegiatanqID uint64) bool
+	AllUser() []entity.User
 }
 
 type kegiatanqService struct {
@@ -57,6 +58,10 @@ func (service *kegiatanqService) Delete(b entity.KegiatanQ) {
 
 func (service *kegiatanqService) All(userID string) []entity.KegiatanQ {
 	return service.kegiatanqRepository.AllKegiatanq(userID)
+}
+
+func (service *kegiatanqService) AllUser() []entity.User {
+	return service.kegiatanqRepository.AllUser()
 }
 
 func (service *kegiatanqService) FindByID(kegiatanqID uint64) entity.KegiatanQ {

@@ -16,6 +16,7 @@ import (
 //BookController is a ...
 type KegiatanQController interface {
 	All(context *gin.Context)
+	AllUser(context *gin.Context)
 	FindByID(context *gin.Context)
 	Insert(context *gin.Context)
 	Update(context *gin.Context)
@@ -50,6 +51,20 @@ func (c *kegiatanqController) All(context *gin.Context) {
 
 }
 
+func (c *kegiatanqController) AllUser(context *gin.Context) {
+	// authHeader := context.GetHeader("Authorization")
+	// token, err := c.jwtService.ValidateToken(authHeader)
+	// if err != nil {
+	// 	panic(err.Error())
+	// }
+	// claims := token.Claims.(jwt.MapClaims)
+	// id := fmt.Sprintf("%v", claims["user_id"])
+	// fmt.Println(id)
+	var kegiatanqs []entity.User = c.kegiatanqService.AllUser()
+	res := helper.BuildResponse(true, "OK", kegiatanqs)
+	context.JSON(http.StatusOK, res)
+
+}
 func (c *kegiatanqController) FindByID(context *gin.Context) {
 	id, err := strconv.ParseUint(context.Param("id"), 0, 0)
 	if err != nil {
